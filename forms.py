@@ -9,7 +9,7 @@ class MusicSearchForm(Form):
                ('Dr.B.C.Roy', 'Dr.B.C.Roy'),
                ('Nelson Mandela', 'Nelson Mandela')]
     select = SelectField('Select Hostel:', choices=choices)
-    search = StringField('')
+    search = StringField('Search Room Number:')
 
 
 class AlbumForm(Form):
@@ -18,8 +18,8 @@ class AlbumForm(Form):
                ('Sannasi C-block', 'Sannasi C-block'),
                ('Dr.B.C.Roy', 'Dr.B.C.Roy'),
                ('Nelson Mandela', 'Nelson Mandela')]
-    artist = StringField('Room Number')
-    title = StringField('Title')
-    release_date = StringField('Release Date')
-    publisher = StringField('Publisher')
+    artist = StringField('Artist')
+    title = StringField('Room Number')
+    release_date = StringField('Name')
+    publisher = StringField('Branch')
     media_type = SelectField('Hostel', choices=media_types)

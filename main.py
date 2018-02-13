@@ -13,19 +13,25 @@ init_db()
 @app.route('/', methods=['GET', 'POST'])
 def index():
     search = MusicSearchForm(request.form)
+    select = MusicSearchForm(request.form)
     if request.method == 'POST':
-        return search_results(search)
+        return search_results(search, select)
 
     return render_template('index.html', form=search)
 
 
 @app.route('/results')
-def search_results(search):
+def search_results(search, select):
     results = []
     search_string = search.data['search']
+    hostel_data = select.data['select']
 
     if search.data['search'] == '':
         qry = db_session.query(Album)
+        results = qry.all()
+
+    else:
+        qry = db_session.query(Album).filter_by(title=search_string).filter_by(media_type=hostel_data)
         results = qry.all()
 
     if not results:
@@ -38,7 +44,7 @@ def search_results(search):
         return render_template('results.html', table=table)
 
 
-@app.route('/new_album', methods=['GET', 'POST'])
+@app.route('/new_student', methods=['GET', 'POST'])
 def new_album():
     """
     Add a new album
@@ -52,7 +58,7 @@ def new_album():
         flash('Data added successfully!')
         return redirect('/')
 
-    return render_template('new_album.html', form=form)
+    return render_template('new_student.html', form=form)
 
 def save_changes(album, form, new=False):
     """
