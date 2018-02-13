@@ -49,7 +49,7 @@ def new_album():
         # save the album
         album = Album()
         save_changes(album, form, new=True)
-        flash('Album created successfully!')
+        flash('Data added successfully!')
         return redirect('/')
 
     return render_template('new_album.html', form=form)
