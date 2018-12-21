@@ -1,0 +1,26 @@
+{
+  "name": "who-is-my-roommate",
+  "version": "1.0.0",
+  "description": "Make Hostel Booking bearable",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rounakdatta/who-is-my-roommate-2.git"
+  },
+  "keywords": [
+    "hostel",
+    "booking"
+  ],
+  "author": "Rounak Datta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rounakdatta/who-is-my-roommate-2/issues"
+  },
+  "homepage": "https://github.com/rounakdatta/who-is-my-roommate-2#readme",
+  "dependencies": {
+    "express-session": "^1.15.6"
+  }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Search Results</title>
+
+	<style>
+	table {
+	  font-family: arial, sans-serif;
+	  border-collapse: collapse;
+	  width: 100%;
+	}
+	
+	td, th {
+	  border: 1px solid #dddddd;
+	  text-align: left;
+	  padding: 8px;
+	}
+	
+	tr:nth-child(even) {
+	  background-color: #dddddd;
+	}
+	</style>
+
+</head>
+<body>
+
+	<h1>Search Results</h1>
+
+	<div id="resultsBox">--- retreiving data ---</div>
+
+</body>
+
+	<script type="text/javascript">
+		
+		var roomData = "<%= roomData %>";
+
+		roomData = JSON.stringify(roomData);
+    	roomData = JSON.parse(roomData);
+    	roomData = roomData.replace(new RegExp("&quot;", 'g'), "\"");
+    	roomData = JSON.parse(roomData);
+
+		var html = "<tr> <th>Name</th> <th>Room No</th> <th>Hostel</th> <th>Contact No</th> </tr>";
+
+		for (var i = 0; i < roomData.length; i++) {
+			curr = roomData[i];
+			html += ("<tr> <th>" + curr['value']['studentName'] + "</th> <th>" + curr['value']['roomNumber'] + "</th> <th>" + curr['value']['hostelName'] + "</th> <th>" + curr['value']['contactNumber'] + "</th> </tr>");
+		}
+
+		html = "<table>" + html + "</table>";
+
+		document.getElementById("resultsBox").innerHTML = html;
+
+	</script>
+
+</html>

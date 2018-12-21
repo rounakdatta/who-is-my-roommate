@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Search</title>
+</head>
+<body>
+
+	<h1>Search</h1>
+
+	<form action="/search" method="POST">
+
+		<label for="roomNumber">Room Number</label><br>
+		<input type="text" id="roomNumber" name="roomNumber" required="true"><br><br>
+
+		<input type="radio" id="gender" name="gender" value="Male" onchange="populateHostels('male')"> M <br>
+		<input type="radio" id="gender" name="gender" value="Female" onchange="populateHostels('female')"> F <br><br>
+
+		<label for="hostelName">Hostel Name</label>
+		<div id="hostelNameBox">--- Select above ---</div><br><br>
+
+        <input type="submit" id="submitButton" name="submitButton" value="Search">
+	</form>
+
+	<script type="text/javascript">
+
+		var boysHostelsData = "<%= boysHostelsData %>";
+		var girlsHostelsData = "<%= girlsHostelsData %>";
+
+		function populateHostels(payload) {
+			if (payload == "male") {
+				payload = boysHostelsData.split(",");
+			} else {
+				payload = girlsHostelsData.split(",");
+			}
+
+			var html = "";
+			for (var i = 0; i < payload.length; i++) {
+				html += "<option value='" + payload[i] + "'>" + payload[i] + "</option>";
+			}
+			html = "<select class='hostelName' name='hostelName'>" + html + "</select>";
+	
+			document.getElementById("hostelNameBox").innerHTML = html;
+		}
+
+	</script>
+
+</body>
+</html>
