@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>New Entry</title>
+</head>
+<body>
+
+	<h1>New Entry</h1>
+
+	<form action="/newEntry" method="POST">
+		<label for="studentName">Student Name</label><br>
+		<input type="text" id="studentName" name="studentName" required="true"><br><br>
+
+		<label for="roomNumber">Room Number</label><br>
+		<input type="text" id="roomNumber" name="roomNumber" required="true"><br><br>
+
+		<input type="radio" id="gender" name="gender" value="Male" onchange="populateHostels('male')"> M <br>
+		<input type="radio" id="gender" name="gender" value="Female" onchange="populateHostels('female')"> F <br><br>
+
+		<label for="hostelName">Hostel Name</label>
+		<div id="hostelNameBox">--- Select above ---</div><br><br>
+
+		<label for="courseYear">Course Year</label><br>
+		<input type="radio" id="courseYear" name="courseYear" value="I"> I <br>
+		<input type="radio" id="courseYear" name="courseYear" value="II"> II <br>
+		<input type="radio" id="courseYear" name="courseYear" value="III"> III <br>
+		<input type="radio" id="courseYear" name="courseYear" value="IV"> IV <br>
+		<input type="radio" id="courseYear" name="courseYear" value="Other"> Other <br><br>
+
+		<label for="contactNumber">Contact Number</label><br>
+		<input type="number" id="contactNumber" name="contactNumber"><br><br>
+
+		<label for="contactURL">Contact URL (Social Media/?)</label><br>
+		<input type="number" id="contactURL" name="contactURL"><br><br>
+
+        <label for="regNo">Register Number (optional)</label><br>
+        <input type="text" id="regNo" name="regNo"><br><br>
+
+        <input type="submit" id="submitButton" name="submitButton" value="Send">
+	</form>
+
+	<script type="text/javascript">
+
+		var boysHostelsData = "<%= boysHostelsData %>";
+		var girlsHostelsData = "<%= girlsHostelsData %>";
+
+		function populateHostels(payload) {
+			if (payload == "male") {
+				payload = boysHostelsData.split(",");
+			} else {
+				payload = girlsHostelsData.split(",");
+			}
+
+			var html = "";
+			for (var i = 0; i < payload.length; i++) {
+				html += "<option value='" + payload[i] + "'>" + payload[i] + "</option>";
+			}
+			html = "<select class='hostelName' name='hostelName'>" + html + "</select>";
+	
+			document.getElementById("hostelNameBox").innerHTML = html;
+		}
+
+	</script>
+
+</body>
+</html>
