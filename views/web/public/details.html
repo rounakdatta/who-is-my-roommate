@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User Details</title>
+</head>
+<body>
+
+	<h1>User Details</h1>
+
+	<div id="resultsBox">--- retrieving data ---</div>
+
+</body>
+
+	<script type="text/javascript">
+		
+		var roomData = "<%= roomData %>";
+
+		roomData = JSON.stringify(roomData);
+    	roomData = JSON.parse(roomData);
+    	roomData = roomData.replace(new RegExp("&quot;", 'g'), "\"");
+    	roomData = JSON.parse(roomData);
+
+    	var html = "";
+
+		for (var i = 0; i < roomData.length; i++) {
+			curr = roomData[i];
+			html += ("Name - " + curr['value']['studentName'] + "<br>Room Number - " + curr['value']['roomNumber'] + "<br>Hostel Name - " + curr['value']['hostelName'] + "<br>Contact Number - " + curr['value']['contactNumber'] + "<br>Contact URL - " + curr['value']['contactURL'] + "<br>Course Year - " + curr['value']['courseYear'] + "<br>Gender - " + curr['value']['gender'] + "<br>Register Number - " + curr['value']['regNo'] + "<br><hr><br>");
+		}
+
+
+		document.getElementById("resultsBox").innerHTML = html;
+
+	</script>
+
+</html>

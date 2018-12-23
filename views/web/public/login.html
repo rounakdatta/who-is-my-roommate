@@ -6,15 +6,20 @@
 <body>
 
 	<h1>Login page</h1>
-	<form action="/login" method="POST">
+	<form id="loginForm" name="loginForm" action="/login" method="POST">
 		<label for="email">Email</label>
 		<input type="text" id="email" name="email"><br>
 
 		<label for="pwd">Password</label>
 		<input type="password" id="pwd" name="pwd"><br>
 
-		<input type="submit" id="submitButton" name="submitButton" value="Register">
+		<input type="submit" id="submitButton" name="submitButton" value="Login">
 	</form>
 
 </body>
+
+<script type="text/javascript">
+	document.getElementById("loginForm").action = '/login' + window.location['search']
+</script>
+
 </html>
