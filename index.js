@@ -158,7 +158,47 @@ app.get('/details/:hostelName/:roomNumber/:personId', function(req, res) {
 });
 
 // swap request API
-app.get('/swap/:hostelName/:roomNumber/:personId', function(req, res) {
+app.get('/swap/request/:hostelName/:roomNumber/:personId', function(req, res) {
+
+	if (req.cookies.currentUser) {
+
+
+		var boysHostels = [];
+		var girlsHostels = [];
+
+		// synchronously get data from firebase using promises
+		db.ref().child("hostels").child("male").once('value')
+		.then( snapshot => {
+			snapshot.forEach(function(childSnapshot) {
+				var hostelData = childSnapshot.val();
+				boysHostels.push(hostelData);
+			});
+			return boysHostels;
+		})
+		.then(function(boysHostels) {
+			db.ref().child("hostels").child("female").once('value')
+			.then( snapshot => {
+				snapshot.forEach(function(childSnapshot) {
+					var hostelData = childSnapshot.val();
+					girlsHostels.push(hostelData);
+				});
+				return {
+					boys: boysHostels,
+					girls: girlsHostels
+				}
+			})
+			.then(function(allHostels) {
+				res.render('web/public/swapRequest.html', {"hostelName": req.params.hostelName, "roomNumber": req.params.roomNumber, "personId": req.params.personId, boysHostelsData: allHostels.boys, girlsHostelsData: allHostels.girls});
+			})
+		});
+
+	} else {
+		res.redirect('/login?redirect=swap+request+' + req.params.hostelName + '+' + req.params.roomNumber + '+' + req.params.personId);
+	}
+
+});
+
+app.post('/swap/:hostelName/:roomNumber/:personId', function(req, res) {
 
 	var currentTime = new Date();
 	var currentOffset = currentTime.getTimezoneOffset();
@@ -187,10 +227,16 @@ app.get('/swap/:hostelName/:roomNumber/:personId', function(req, res) {
 			swapDate: swapDate,
 			swapTime: swapTime,
 			'requestGivenBy': req.cookies.currentUser,
-			'requesGivenTo': req.params.personId
+			'requesGivenTo': req.params.personId,
+			'personName': req.body.personName,
+			'bookedRoomNumber': req.body.bookedRoomNumber,
+			'gender': req.body.gender,
+			'bookedHostelName': req.body.hostelName,
+			'contactNumber': req.body.contactNumber,
+			'someMessage': req.body.someMessage
 		};
 		db.ref().child("data").child(req.params.hostelName).child(req.params.roomNumber).child(req.params.personId).child('swaps').push().set(swapData);
-		return res.send('done!')
+		res.redirect('/');
 	} else {
 		res.redirect('/login?redirect=swap+' + req.params.hostelName + '+' + req.params.roomNumber + '+' + req.params.personId);
 	}

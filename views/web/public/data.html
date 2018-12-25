@@ -45,7 +45,7 @@
 
 		for (var i = 0; i < roomData.length; i++) {
 			curr = roomData[i];
-			html += ("<tr> <th>" + curr['value']['studentName'] + "</th> <th>" + curr['value']['roomNumber'] + "</th> <th>" + curr['value']['hostelName'] + "</th> <th>" + curr['value']['contactNumber'] + "</th> <th><a href='/swap/" + curr['value']['hostelName'] + "/" + curr['value']['roomNumber'] + "/" + curr['key'] + "''>Swap</a>" + "</th> <th><a href='/details/" + curr['value']['hostelName'] + "/" + curr['value']['roomNumber'] + "/" + curr['key'] + "''>View More</a></th> </tr>");
+			html += ("<tr> <th>" + curr['value']['studentName'] + "</th> <th>" + curr['value']['roomNumber'] + "</th> <th>" + curr['value']['hostelName'] + "</th> <th>" + curr['value']['contactNumber'] + "</th> <th><a href='/swap/request/" + curr['value']['hostelName'] + "/" + curr['value']['roomNumber'] + "/" + curr['key'] + "''>Swap</a>" + "</th> <th><a href='/details/" + curr['value']['hostelName'] + "/" + curr['value']['roomNumber'] + "/" + curr['key'] + "''>View More</a></th> </tr>");
 		}
 
 		html = "<table>" + html + "</table>";

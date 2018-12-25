@@ -25,6 +25,15 @@
 		for (var i = 0; i < roomData.length; i++) {
 			curr = roomData[i];
 			html += ("Name - " + curr['value']['studentName'] + "<br>Room Number - " + curr['value']['roomNumber'] + "<br>Hostel Name - " + curr['value']['hostelName'] + "<br>Contact Number - " + curr['value']['contactNumber'] + "<br>Contact URL - " + curr['value']['contactURL'] + "<br>Course Year - " + curr['value']['courseYear'] + "<br>Gender - " + curr['value']['gender'] + "<br>Register Number - " + curr['value']['regNo'] + "<br><hr><br>");
+
+			// the person's swap requests
+			var j = 1;
+			Object.keys(curr['value']['swaps']).forEach(function(key) {
+			  var thisSwap = curr['value']['swaps'][key];
+			  html += ('---Swap' + String(j) + '---<br>Swap from - ' + thisSwap['personName'] + '<br>Room No - ' + thisSwap['bookedRoomNumber'] + '<br>Hostel Name - ' + thisSwap['bookedHostelName'] + '<br>Contact Number - ' + thisSwap['contactNumber'] + '<br>Message - ' + thisSwap['someMessage'] + '<br>---<br>');
+			  j += 1;
+			});
+
 		}
 
 

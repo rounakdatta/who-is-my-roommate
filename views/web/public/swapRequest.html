@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Make a Swap Request</title>
+</head>
+<body>
+
+	<h1>Make a Swap Request</h1>
+
+	<form id="swapForm" action="/" method="POST">
+		<label for="personName">Your Name: </label><br>
+		<input type="text" id="personName" name="personName"><br>
+
+		<label for="bookedRoomNumber">Your Booked Room Number: </label><br>
+		<input type="text" id="bookedRoomNumber" name="bookedRoomNumber"><br>
+
+		<input type="radio" id="gender" name="gender" value="Male" onchange="populateHostels('male')"> M <br>
+		<input type="radio" id="gender" name="gender" value="Female" onchange="populateHostels('female')"> F <br><br>
+
+		<label for="hostelName">Hostel Name</label><br>
+		<div id="hostelNameBox">--- Select above ---</div><br><br>
+
+		<label for="contactNumber">Your Contact Number: </label><br>
+		<input type="number" id="contactNumber" name="contactNumber"><br>
+
+		<label for="someMessage">Leave a message: </label><br>
+		<input type="text" id="someMessage" name="someMessage"><br>
+
+		<input type="submit" id="submitButton" name="submitButton" value="Make Swap Request">
+	</form>
+
+</body>
+
+<script type="text/javascript">
+	var boysHostelsData = "<%= boysHostelsData %>";
+	var girlsHostelsData = "<%= girlsHostelsData %>";
+	function populateHostels(payload) {
+		if (payload == "male") {
+			payload = boysHostelsData.split(",");
+		} else {
+			payload = girlsHostelsData.split(",");
+		}
+		var html = "";
+		for (var i = 0; i < payload.length; i++) {
+			html += "<option value='" + payload[i] + "'>" + payload[i] + "</option>";
+		}
+		html = "<select class='hostelName' name='hostelName'>" + html + "</select>";
+
+		document.getElementById("hostelNameBox").innerHTML = html;
+	}
+</script>
+
+<script type="text/javascript">
+
+	var hostelName = "<%= hostelName %>";
+	var roomNumber = "<%= roomNumber %>";
+	var personId = "<%= personId %>";
+
+	document.getElementById("swapForm").action = "/swap/" + hostelName + "/" + roomNumber + "/" + personId;
+
+</script>
+
+</html>
