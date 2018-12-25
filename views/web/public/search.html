@@ -1,25 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<title>Search</title>
 </head>
 <body>
 
-	<h1>Search</h1>
+	<div class="container">
 
-	<form action="/search" method="POST">
+		<br>
+		<center>
 
-		<label for="roomNumber">Room Number</label><br>
-		<input type="text" id="roomNumber" name="roomNumber" required="true"><br><br>
+			<ul class="nav justify-content-center">
+			  <li class="nav-item">
+			    <a class="nav-link btn btn-light" href="/">Home</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link btn btn-dark disabled" href="#">Search</a>
+			  </li>
+			</ul>
+			<br><br>	
+	
+			<form action="/search" method="POST">
 
-		<input type="radio" id="gender" name="gender" value="Male" onchange="populateHostels('male')"> M <br>
-		<input type="radio" id="gender" name="gender" value="Female" onchange="populateHostels('female')"> F <br><br>
+					<div class="input-group mb-3">
+					  <div class="input-group-prepend">
+					    <span class="input-group-text">Room Number</span>
+					  </div>
+					  <input type="text" id="roomNumber" name="roomNumber" class="form-control" required="true">
+					</div>
 
-		<label for="hostelName">Hostel Name</label>
-		<div id="hostelNameBox">--- Select above ---</div><br><br>
+					<div class="custom-control custom-radio">
+					  <input type="radio" class="custom-control-input" id="genderMale" name="gender" value="Male" onchange="populateHostels('male')">
+					  <label class="custom-control-label" for="genderMale">M</label>
+					</div> 
 
-        <input type="submit" id="submitButton" name="submitButton" value="Search">
-	</form>
+					<div class="custom-control custom-radio">
+					  <input type="radio" class="custom-control-input" id="genderFemale" name="gender" value="Female" onchange="populateHostels('female')">
+					  <label class="custom-control-label" for="genderFemale">F</label>
+					</div>
+
+					<br><br>
+		
+					<button type="button" class="btn disabled">Hostel Name</button><br><br>
+					<div id="hostelNameBox">--- Select above ---</div><br>
+
+		    	    <input type="submit" id="submitButton" name="submitButton" class="btn btn-outline btn-lg btn-primary" value="Go">
+			</form>
+
+		</center>
+
+	</div>
 
 	<script type="text/javascript">
 
@@ -37,7 +71,7 @@
 			for (var i = 0; i < payload.length; i++) {
 				html += "<option value='" + payload[i] + "'>" + payload[i] + "</option>";
 			}
-			html = "<select class='hostelName' name='hostelName'>" + html + "</select>";
+			html = "<select class='custom-select hostelName' name='hostelName'>" + html + "</select>";
 	
 			document.getElementById("hostelNameBox").innerHTML = html;
 		}
