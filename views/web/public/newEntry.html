@@ -9,39 +9,116 @@
 </head>
 <body>
 
-	<h1>New Entry</h1>
+	<div class="container">
+		<br>
+		<center>
 
-	<form action="/newEntry" method="POST">
-		<label for="studentName">Student Name</label><br>
-		<input type="text" id="studentName" name="studentName" required="true"><br><br>
+		<ul class="nav justify-content-center">
+		  <li class="nav-item">
+		    <a class="nav-link btn btn-light" href="/">Home</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link btn btn-light" href="/userdashboard">Dashboard</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link btn btn-dark disabled" href="#">New Entry</a>
+		  </li>
+		</ul>
 
-		<label for="roomNumber">Room Number</label><br>
-		<input type="text" id="roomNumber" name="roomNumber" required="true"><br><br>
+		<br><br>
 
-		<input type="radio" id="gender" name="gender" value="Male" onchange="populateHostels('male')"> M <br>
-		<input type="radio" id="gender" name="gender" value="Female" onchange="populateHostels('female')"> F <br><br>
+		<div class="card">
+			<form action="/newEntry" method="POST">
+				<div class="card-header"><b>New Student Entry</b></div>
+				<div class="card-body">
+	
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Student Name</span>
+					</div>
+					<input type="text" id="studentName" name="studentName" class="form-control" required="true">
+				</div>
+	
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Room Number</span>
+					</div>
+					<input type="text" id="roomNumber" name="roomNumber" class="form-control" required="true">
+				</div>
 
-		<label for="hostelName">Hostel Name</label>
-		<div id="hostelNameBox">--- Select above ---</div><br><br>
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="genderMale" name="gender" value="Male" onchange="populateHostels('male')" required="true">
+				  <label class="custom-control-label" for="genderMale">M</label>
+				</div>
 
-		<label for="courseYear">Course Year</label><br>
-		<input type="radio" id="courseYear" name="courseYear" value="I"> I <br>
-		<input type="radio" id="courseYear" name="courseYear" value="II"> II <br>
-		<input type="radio" id="courseYear" name="courseYear" value="III"> III <br>
-		<input type="radio" id="courseYear" name="courseYear" value="IV"> IV <br>
-		<input type="radio" id="courseYear" name="courseYear" value="Other"> Other <br><br>
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="genderFemale" name="gender" value="Female" onchange="populateHostels('female')" required="true">
+				  <label class="custom-control-label" for="genderFemale">F</label>
+				</div>	
 
-		<label for="contactNumber">Contact Number</label><br>
-		<input type="number" id="contactNumber" name="contactNumber"><br><br>
+				<hr>
 
-		<label for="contactURL">Contact URL (Social Media/?)</label><br>
-		<input type="number" id="contactURL" name="contactURL"><br><br>
+				<button type="button" class="btn disabled">Hostel Name</button><br><br>
+				<div id="hostelNameBox">--- Select above ---</div><br><br>
 
-        <label for="regNo">Register Number (optional)</label><br>
-        <input type="text" id="regNo" name="regNo"><br><br>
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="courseYear1" name="courseYear" value="I">
+				  <label class="custom-control-label" for="courseYear1">I-Year</label>
+				</div>
 
-        <input type="submit" id="submitButton" name="submitButton" value="Send">
-	</form>
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="courseYear2" name="courseYear" value="II">
+				  <label class="custom-control-label" for="courseYear2">II-Year</label>
+				</div>
+
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="courseYear3" name="courseYear" value="III">
+				  <label class="custom-control-label" for="courseYear3">III-Year</label>
+				</div>
+
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="courseYear4" name="courseYear" value="IV">
+				  <label class="custom-control-label" for="courseYear4">IV-Year</label>
+				</div>
+
+				<hr>
+
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Contact Number</span>
+					</div>
+					<input type="text" id="contactNumber" name="contactNumber" class="form-control" placeholder="(optional)">
+				</div>
+
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Contact URL</span>
+					</div>
+					<input type="text" id="contactURL" name="contactURL" class="form-control" placeholder="Social Media/? (optional)">
+				</div>
+
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Register Number</span>
+					</div>
+					<input type="text" id="regNo" name="regNo" class="form-control" placeholder="(optional)">
+				</div>				
+
+				<div class="custom-control custom-checkbox">
+				  <input type="checkbox" class="custom-control-input" id="confirmCorrect" name="confirmCorrect" required="true">
+				  <label class="custom-control-label" for="confirmCorrect">I confirm that the above details are absolutely correct</label>
+				</div>
+
+				</div> 
+				<div class="card-footer">
+					<input type="submit" id="submitButton" name="submitButton" class="btn btn-outline btn-info" value="Submit">
+				</div>
+
+			</form>
+		</div>
+		</center>
+	</div>
+	<br><br>
 
 	<script type="text/javascript">
 
@@ -59,7 +136,7 @@
 			for (var i = 0; i < payload.length; i++) {
 				html += "<option value='" + payload[i] + "'>" + payload[i] + "</option>";
 			}
-			html = "<select class='hostelName' name='hostelName'>" + html + "</select>";
+			html = "<select class='custom-select hostelName' name='hostelName'>" + html + "</select>";
 	
 			document.getElementById("hostelNameBox").innerHTML = html;
 		}

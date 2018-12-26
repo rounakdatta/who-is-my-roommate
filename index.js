@@ -141,14 +141,21 @@ app.get('/userdashboard', function(req, res) {
 	}
 });
 
+// redirection outside API
+app.get('/redirect_out/:url', function(req, res) {
+	res.redirect(req.params.url);
+});
+
 // user details API
 app.get('/details/:hostelName/:roomNumber/:personId', function(req, res) {
 
 	db.ref().child("data").child(req.params.hostelName).child(req.params.roomNumber).once('value')
 	.then( snapshot => {
 		var roomData = []
-		snapshot.forEach(function(childSnapshot) {;
-			roomData.push({"key": childSnapshot.key, "value": childSnapshot.val()});
+		snapshot.forEach(function(childSnapshot) {
+			if (childSnapshot.key == req.params.personId) {
+				roomData.push({"key": childSnapshot.key, "value": childSnapshot.val()});
+			}
 		});
 		return roomData;
 	})
@@ -232,6 +239,7 @@ app.post('/swap/:hostelName/:roomNumber/:personId', function(req, res) {
 			'bookedRoomNumber': req.body.bookedRoomNumber,
 			'gender': req.body.gender,
 			'bookedHostelName': req.body.hostelName,
+			'courseYear': req.body.courseYear,
 			'contactNumber': req.body.contactNumber,
 			'someMessage': req.body.someMessage
 		};
@@ -342,6 +350,11 @@ app.post('/newEntry', function(req, res) {
 		var contactNumber = req.body.contactNumber;
 		var contactURL = req.body.contactURL;
 		var regNo = req.body.regNo;
+
+		if (contactURL.substr(0, 'http://'.length) !== 'http://' && contactURL.substr(0, 'https://'.length) !== 'https://')
+		{
+		    contactURL = 'http://' + contactURL;
+		}
 	
 		var userData = {
 			'studentName': studentName,

@@ -4,14 +4,51 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<title>User Details</title>
 </head>
 <body>
 
-	<h1>User Details</h1>
+<div class="container">
+	<br><br>
 
-	<div id="resultsBox">--- retrieving data ---</div>
+	<ul class="nav justify-content-center">
+	  <li class="nav-item">
+	    <a class="nav-link btn btn-light" href="/">Home</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link btn btn-light" href="/search">Search</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link btn btn-dark disabled" href="#">User Details</a>
+	  </li>
+	</ul>
+
+	<br>
+
+	<center>
+	<div class="card">
+		<div class="card-header"></div>
+		<div id="fullDetails" class="card-body">
+			---retrieving data ---
+		</div> 
+		<div class="card-footer"></div>
+	</div>
+
+	<br>
+
+	<div id="swapBox">
+
+		<div id="accordion">
+		</div>
+
+    </div>
+
+    <br><br>
+
+	</center>
+</div>
 
 </body>
 
@@ -28,20 +65,40 @@
 
 		for (var i = 0; i < roomData.length; i++) {
 			curr = roomData[i];
-			html += ("Name - " + curr['value']['studentName'] + "<br>Room Number - " + curr['value']['roomNumber'] + "<br>Hostel Name - " + curr['value']['hostelName'] + "<br>Contact Number - " + curr['value']['contactNumber'] + "<br>Contact URL - " + curr['value']['contactURL'] + "<br>Course Year - " + curr['value']['courseYear'] + "<br>Gender - " + curr['value']['gender'] + "<br>Register Number - " + curr['value']['regNo'] + "<br><hr><br>");
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Student Name' + '</b></div><div class="col-sm-6">' + curr['value']['studentName'] + '</div></div><hr>';
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Room Number' + '</b></div><div class="col-sm-6">' + curr['value']['roomNumber'] + '</div></div><hr>';
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Hostel Name' + '</b></div><div class="col-sm-6">' + curr['value']['hostelName'] + '</div></div><hr>';
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Contact Number' + '</b></div><div class="col-sm-6">' + curr['value']['contactNumber'] + '</div></div><hr>';
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Contact URL' + '</b></div><div class="col-sm-6"><a href="' + curr['value']['contactURL'] + '">' + curr['value']['contactURL'] + '</a></div></div><hr>';
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Course Year' + '</b></div><div class="col-sm-6">' + curr['value']['courseYear'] + '</div></div><hr>';
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Gender' + '</b></div><div class="col-sm-6">' + curr['value']['gender'] + '</div></div><hr>';
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Register Number' + '</b></div><div class="col-sm-6">' + curr['value']['regNo'] + '</div></div>';
 
-			// the person's swap requests
-			var j = 1;
-			Object.keys(curr['value']['swaps']).forEach(function(key) {
-			  var thisSwap = curr['value']['swaps'][key];
-			  html += ('---Swap' + String(j) + '---<br>Swap from - ' + thisSwap['personName'] + '<br>Room No - ' + thisSwap['bookedRoomNumber'] + '<br>Hostel Name - ' + thisSwap['bookedHostelName'] + '<br>Contact Number - ' + thisSwap['contactNumber'] + '<br>Message - ' + thisSwap['someMessage'] + '<br>---<br>');
-			  j += 1;
-			});
+
+			if (typeof curr['value']['swaps'] != "undefined") {
+
+				// the person's swap requests
+				var swaphtml = "";
+				var j = 1;
+				Object.keys(curr['value']['swaps']).forEach(function(key) {
+			  	var thisSwap = curr['value']['swaps'][key];
+
+			  	let mainData = '<i>This swap request is from</i><br><b>Name</b>: ' + thisSwap['personName'] + '<br><b>Room Number</b>: ' + thisSwap['bookedRoomNumber'] + '<br><b>Hostel Name</b>: ' + thisSwap['bookedHostelName'] + '<br><b>Contact Number</b>: ' + thisSwap['contactNumber'] + '<br><b>Message</b>: ' + thisSwap['someMessage'];
+
+			  	swaphtml += '<div class="card"><div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#collapse' + j + '">' + 'Swap Request ' + j + '</a></div><div id="collapse' + j + '" class="collapse" data-parent="#accordion"><div class="card-body">' + mainData + '</div></div></div>'
+
+			  	//swaphtml += ('---Swap' + String(j) + '---<br>Swap from - ' + thisSwap['personName'] + '<br>Room No - ' + thisSwap['bookedRoomNumber'] + '<br>Hostel Name - ' + thisSwap['bookedHostelName'] + '<br>Contact Number - ' + thisSwap['contactNumber'] + '<br>Message - ' + thisSwap['someMessage'] + '<br>---<br>');
+			  	j += 1;
+				});
+
+				document.getElementById("accordion").innerHTML = swaphtml;
+
+			}
 
 		}
 
 
-		document.getElementById("resultsBox").innerHTML = html;
+		document.getElementById("fullDetails").innerHTML = html;
 
 	</script>
 

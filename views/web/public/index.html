@@ -3,6 +3,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<title>Who Is My Roommate</title>
@@ -31,14 +32,16 @@
 			</div>
 
 			<div id="logoutBlock" class="row">
-				<div class="col-sm-4"></div>
-				<div class="col-sm-4"><a id="logoutButton" name="logoutButton" href="/logout" class="btn btn-outline-secondary btn-lg btn-block">Logout</a></div>
-				<div class="col-sm-4"></div>
+				<div class="col-sm-3"></div>
+				<div class="col-sm-3"><a id="dashboardButton" name="dashboardButton" href="/userdashboard" class="btn btn-outline-warning btn-lg btn-block">My Dashboard</a></div><br>
+
+				<div class="col-sm-3"><a id="logoutButton" name="logoutButton" href="/logout" class="btn btn-outline-secondary btn-lg btn-block">Logout</a></div>
+				<div class="col-sm-3"></div>
 			</div>
 
 			<br>
 
-			<a href="/search" class="btn btn-primary btn-lg">Search</a><br><br>
+			<a href="/search"><button class="btn btn-primary" style="font-size:24px">Search <i class="fa fa-search"></i></button></a><br><br>
 
 		</div>
 
