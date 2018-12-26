@@ -73,6 +73,7 @@
 
 		roomData = JSON.stringify(roomData);
     	roomData = JSON.parse(roomData);
+    	roomData = roomData.replace(new RegExp("&#34;", 'g'), "\"");
     	roomData = roomData.replace(new RegExp("&quot;", 'g'), "\"");
     	roomData = JSON.parse(roomData);
 
