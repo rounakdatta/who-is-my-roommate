@@ -1,11 +1,14 @@
 'use strict';
 
-const http = require('http')
+const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const request = require('request');
+const schedule = require('node-schedule');
+require('dotenv').config();
 
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -14,16 +17,34 @@ const session = require('express-session');
 const firebase = require('firebase');
 
 var config = {
-    apiKey: "AIzaSyDwr7va2aW5tT_oxRz8UNv-szJAyhubG_g",
-    authDomain: "who-is-my-roommate.firebaseapp.com",
-    databaseURL: "https://who-is-my-roommate.firebaseio.com",
-    projectId: "who-is-my-roommate",
-    storageBucket: "who-is-my-roommate.appspot.com",
-    messagingSenderId: "258660715420"
+    apiKey: process.env.APIKEY,
+    authDomain: process.env.AUTHDOMAIN,
+    databaseURL: process.env.DBURL,
+    projectId: process.env.PROJECTID,
+    storageBucket: process.env.STORAGEBCKT,
+    messagingSenderId: process.env.MSID
   };
+
 var fbapp = firebase.initializeApp(config);
 var db = fbapp.database();
 var auth = fbapp.auth();
+
+// keepalive ping hacks
+function rememberMyServer(uri) {
+ 	https.get(uri, (resp) => {
+ 		console.log(uri + ' - alive!');
+ 	}).on('error', (err) => {
+ 		console.log(uri + ' - dead! emergency!');
+ 	});
+}
+
+var keepalive = schedule.scheduleJob('*/10 * * * *', function() {
+
+	var allMyServers = ['https://repl1.hostelroo.ml', 'https://repl2.hostelroo.ml', 'https://repl3.hostelroo.ml', 'https://repl4.hostelroo.ml'];
+	for(var i = 0; i < allMyServers.length; i++) {
+		rememberMyServer(allMyServers[i]);
+	}
+})
 
 // app body-parser config
 const app = express()
@@ -373,6 +394,16 @@ app.post('/newEntry', function(req, res) {
 	} else {
 		res.send('Unauthorized');
 	}
+});
+
+// product like API
+app.post('/send/love/:tracking', function(req, res) {
+	var personWhoLikedMe = req.params.tracking;
+	var loveData = {
+		'tracker': personWhoLikedMe
+	};
+
+	db.ref().child("testimonials").child("loves").push().set(loveData);
 });
 
 // server settings

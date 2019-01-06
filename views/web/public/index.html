@@ -1,12 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script id="scripty" async></script>
+
+	<script type="text/javascript">
+		const currentURI = window.location.href;
+		const uri2ga = {"https://repl1.hostelroo.ml": "1", "https://repl2.hostelroo.ml": "2", "https://repl3.hostelroo.ml": "3", "https://repl4.hostelroo.ml": "4", "http://13.127.5.192:4000/": "5", "http://13.232.106.64:4000/": "6", "undefined": 1};
+		const gaId = uri2ga[currentURI];
+		document.getElementById("scripty").src = "https://www.googletagmanager.com/gtag/js?id=UA-131728408-" + gaId;
+	</script>
+
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'UA-131728408-' + gaId);
+	</script>
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<title>Who Is My Roommate</title>
+
+	<style type="text/css">
+		
+		.heart {
+		  cursor: pointer;
+		  height: 50px;
+		  width: 50px;
+		  background-image:url( 'https://abs.twimg.com/a/1446542199/img/t1/web_heart_animation.png');
+		  background-position: left;
+		  background-repeat:no-repeat;
+		  background-size:2900%;
+		}
+		
+		.heart:hover {
+		  background-position:right;
+		}
+		
+		.is_animating {
+		  animation: heart-burst .8s steps(28) 1;
+		}
+		
+		@keyframes heart-burst {
+		  from {background-position:left;}
+		  to { background-position:right;}
+		}
+
+	</style>
+
 </head>
 <body>
 
@@ -45,6 +92,8 @@
 
 		</div>
 
+		<div class="heart"></div>
+
 	</center>
 
 </body>
@@ -53,6 +102,7 @@
 	var ifLoggedIn = document.cookie.indexOf('currentUser=');
 	if (ifLoggedIn != -1) {
 		// logged in
+		console.log(document.cookie);
 		document.getElementById("loginBlock").style.display = "none";
 		document.getElementById("logoutBlock").style.display = "block";
 	} else {
@@ -60,6 +110,35 @@
 		document.getElementById("loginBlock").style.display = "block";
 		document.getElementById("logoutBlock").style.display = "none";
 	}
+</script>
+
+<script type="text/javascript">
+
+$(".heart").on('click touchstart', function()
+{
+	$(this).toggleClass('is_animating');
+
+	var settings = {
+	  "async": true,
+	  "crossDomain": true,
+	  "url": "/send/love/" + document.cookie,
+	  "method": "POST",
+	  "headers": {
+	    "Content-Type": "application/x-www-form-urlencoded",
+	    "cache-control": "no-cache"
+	  }
+	}
+	
+	$.ajax(settings).done(function (response) {
+	  console.log('Love sent');
+	});
+
+});
+
+$(".heart").on('animationend', function(){
+	$(this).toggleClass('is_animating');
+});
+
 </script>
 
 
