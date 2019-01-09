@@ -29,6 +29,64 @@ var fbapp = firebase.initializeApp(config);
 var db = fbapp.database();
 var auth = fbapp.auth();
 
+// algolia config
+const algoliasearch = require('algoliasearch');
+
+const algolia = algoliasearch(
+	process.env.ALGOLIA_APP_ID,
+	process.env.ALGOLIA_API_KEY
+);
+
+const algIndex = algolia.initIndex(process.env.ALGOLIA_INDEX_NAME);
+
+// changes to the 'data' table listener
+const hostelListener = db.ref().child('data');
+
+hostelListener.on('child_added', addOrUpdateRecord);
+hostelListener.on('child_changed', addOrUpdateRecord);
+hostelListener.on('child_removed', deleteRecord);
+
+function addOrUpdateRecord(payload) {
+
+	const records = [];
+	payload.forEach(datum => {
+
+
+			datum.forEach(microDatum => {
+
+				const childKey = microDatum.key;
+				const childData = microDatum.val();
+		
+				childData.objectID = childKey;
+		
+				records.push(childData);
+
+			});
+	});
+
+	algIndex
+	.saveObjects(records)
+	.then(() => {
+		console.log('New addition/updation on Algolia!', records.objectID);
+	})
+	.catch(error => {
+		console.log('Error while addition/updation on Algolia!', error);
+	});
+}
+
+function deleteRecord(payload) {
+	const objectID = payload.key;
+
+	algIndex
+	.deleteObject(objectID)
+	.then(() => {
+		console.log('New deletion on Algolia!', objectID);
+	})
+	.catch(error => {
+		console.log('Error while deletion on Algolia!', error);
+	});
+}
+
 // keepalive ping hacks
 function rememberMyServer(uri) {
  	https.get(uri, (resp) => {
@@ -321,6 +379,43 @@ app.post('/search', function(req, res) {
 		res.render('web/public/data.html', {roomData: JSON.stringify(roomData)});
 	});
 });
+
+// smart search API
+app.get('/smartsearch', function(req, res) {
+	res.render('web/public/smartsearch.html');
+});
+
+app.post('/smartsearch', function(req, res) {
+	var smartQuery = req.body.smartQuery;
+
+	algIndex.search(smartQuery, {
+	 "hitsPerPage": 10,
+	 "page": 0,
+	 "analytics": true,
+	 "attributesToRetrieve": "*",
+	 "getRankingInfo": true,
+	 "responseFields": "*",
+	 "facets": []
+	},
+	function searchDone(err, content) {
+		if (err) throw err;
+	
+		let searchResults = content.hits;
+
+		var allResults = [];
+
+		searchResults.forEach(function(result) {
+			var thisResult = {
+				"key": result.objectID,
+				"value": result
+			};
+			allResults.push(thisResult);
+		});
+
+		res.render('web/public/data.html', {roomData: JSON.stringify(allResults)});
+	});
+
+})
 
 // new data entry API
 app.get('/newEntry', function(req, res) {
