@@ -53,7 +53,7 @@
 		    <a class="nav-link btn btn-light" href="/">Home</a>
 		  </li>
 		  <li class="nav-item">
-		    <a class="nav-link btn btn-light" href="/search">Search</a>
+		    <a id="goBackSearcher" class="nav-link btn btn-light" href="/search">Search</a>
 		  </li>
 		  <li class="nav-item">
 		    <a class="nav-link btn btn-dark disabled" href="#">Search Results</a>
@@ -66,7 +66,7 @@
 			<strong>No</strong> results found!
 		</div>
 
-		<a href="/search"><button class="btn btn-primary" style="font-size:24px"><i class="fas fa-arrow-left"></i> New Search</button></a>
+		<a id="newSearcher" href="/search"><button class="btn btn-primary" style="font-size:24px"><i class="fas fa-arrow-left"></i> New Search</button></a>
 		<br><br>
 
 		<div id="resultsBox">--- retrieving data ---</div>
@@ -97,9 +97,14 @@
 
 		html = "<div class='table-responsive'><table class='table'>" + html + "</table></div>";
 
+		var searchQuery = "<%= searchQuery %>";
 		document.getElementById("resultsBox").innerHTML = html;
-		var searchInfo = "You have searched for <strong>" + roomData[0]['value']['roomNumber'] + ", " + roomData[0]['value']['hostelName'] + "</strong>. Found <strong>" + (roomData.length) + "</strong> result(s)!";
+		var searchInfo = "You have searched for <strong>" + searchQuery + "</strong>. Found <strong>" + (roomData.length) + "</strong> result(s)!";
 		document.getElementById("searchInfo").innerHTML = searchInfo;
+
+		var searchType = "<%= searchType %>";
+		document.getElementById("goBackSearcher").href = '/' + searchType;
+		document.getElementById("newSearcher").href = '/' + searchType;
 
 	</script>
 

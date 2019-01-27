@@ -172,9 +172,7 @@ app.post('/register', function(req, res) {
 	})
 	.catch(function(error) {
 		if (error) {
-			console.log(error.message);
-			console.log(error);
-			return res.redirect('/');
+			res.send(error);
 		}
 	});
 });
@@ -206,7 +204,7 @@ app.post('/login', function(req, res) {
 	})
 	.catch(function(error) {
 		if (error) {
-			console.log(error.message);
+			res.send(error);
 		}
 	});
 });
@@ -376,7 +374,8 @@ app.post('/search', function(req, res) {
 		return roomData;
 	})
 	.then(function(roomData) {
-		res.render('web/public/data.html', {roomData: JSON.stringify(roomData)});
+		let searchQuery = roomNumber + ', ' + hostelName;
+		res.render('web/public/data.html', {roomData: JSON.stringify(roomData), searchQuery: searchQuery, searchType: 'search'});
 	});
 });
 
@@ -412,7 +411,8 @@ app.post('/smartsearch', function(req, res) {
 			allResults.push(thisResult);
 		});
 
-		res.render('web/public/data.html', {roomData: JSON.stringify(allResults)});
+		let searchQuery = smartQuery;
+		res.render('web/public/data.html', {roomData: JSON.stringify(allResults), searchQuery: searchQuery, searchType: 'smartsearch'});
 	});
 
 })
