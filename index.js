@@ -311,7 +311,7 @@ app.post('/swap/:hostelName/:roomNumber/:personId', function(req, res) {
 			swapDate: swapDate,
 			swapTime: swapTime,
 			'requestGivenBy': req.cookies.currentUser,
-			'requesGivenTo': req.params.personId,
+			'requestGivenTo': req.params.personId,
 			'personName': req.body.personName,
 			'bookedRoomNumber': req.body.bookedRoomNumber,
 			'gender': req.body.gender,
