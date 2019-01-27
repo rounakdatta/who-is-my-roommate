@@ -98,7 +98,7 @@ function rememberMyServer(uri) {
 
 var keepalive = schedule.scheduleJob('*/10 * * * *', function() {
 
-	var allMyServers = ['https://repl1.hostelroo.ml', 'https://repl2.hostelroo.ml', 'https://repl3.hostelroo.ml', 'https://repl4.hostelroo.ml'];
+	var allMyServers = ['https://repl1.hostelroo.ml', 'https://repl2.hostelroo.ml', 'https://repl3.hostelroo.ml', 'https://repl4.hostelroo.ml', 'https://repl5.hostelroo.ml', 'https://repl6.hostelroo.ml'];
 	for(var i = 0; i < allMyServers.length; i++) {
 		rememberMyServer(allMyServers[i]);
 	}
