@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script id="scripty" async></script>
+
+	<script type="text/javascript">
+
+		function doMyGA() {
+			const currentURI = window.location.hostname;
+			const uri2ga = {"repl1.hostelroo.ml": "1", "repl2.hostelroo.ml": "2", "repl3.hostelroo.ml": "3", "repl4.hostelroo.ml": "4", "repl5.hostelroo.ml": "5", "repl6.hostelroo.ml": "6", "undefined": "7", "localhost": "8"};
+			const gaId = uri2ga[currentURI];
+			document.getElementById("scripty").src = "https://www.googletagmanager.com/gtag/js?id=UA-131728408-" + gaId;
+			return gaId;
+		}
+
+		
+	</script>
+
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'UA-131728408-' + doMyGA());
+	</script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<title>Make a Swap Request | Who Is My Roommate</title>
+</head>
+<body>
+
+
+	<div class="container">
+		<br>
+		<center>
+
+		<ul class="nav justify-content-center">
+		  <li class="nav-item">
+		    <a class="nav-link btn btn-light" href="/">Home</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link btn btn-light" href="/search">Search</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link btn btn-dark disabled" href="#">Swap Request</a>
+		  </li>
+		</ul>
+
+		<br><br>
+
+		<div class="card">
+			<form id="swapForm" action="/" method="POST">
+				<div class="card-header"><b>Swap Request</b></div>
+				<div class="card-body">
+	
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Your Name</span>
+					</div>
+					<input type="text" id="personName" name="personName" class="form-control" required="true">
+				</div>
+	
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Your Booked Room Number</span>
+					</div>
+					<input type="text" id="bookedRoomNumber" name="bookedRoomNumber" class="form-control" required="true">
+				</div>
+
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="genderMale" name="gender" value="Male" onchange="populateHostels('male')" required="true">
+				  <label class="custom-control-label" for="genderMale">M</label>
+				</div>
+
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="genderFemale" name="gender" value="Female" onchange="populateHostels('female')" required="true">
+				  <label class="custom-control-label" for="genderFemale">F</label>
+				</div>	
+
+				<hr>
+
+				<button type="button" class="btn disabled">Your Booked Hostel Name</button><br><br>
+				<div id="hostelNameBox">--- Select above ---</div><br><br>
+
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="courseYear1" name="courseYear" value="I" required="true">
+				  <label class="custom-control-label" for="courseYear1">I-Year</label>
+				</div>
+
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="courseYear2" name="courseYear" value="II" required="true">
+				  <label class="custom-control-label" for="courseYear2">II-Year</label>
+				</div>
+
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="courseYear3" name="courseYear" value="III" required="true">
+				  <label class="custom-control-label" for="courseYear3">III-Year</label>
+				</div>
+
+				<div class="custom-control custom-radio">
+				  <input type="radio" class="custom-control-input" id="courseYear4" name="courseYear" value="IV" required="true">
+				  <label class="custom-control-label" for="courseYear4">IV-Year</label>
+				</div>
+
+				<hr>
+
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Your Contact Number</span>
+					</div>
+					<input type="text" id="contactNumber" name="contactNumber" class="form-control" placeholder="(optional)">
+				</div>
+
+				<div class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Leave a Message</span>
+					</div>
+					<input type="text" id="someMessage" name="someMessage" class="form-control" placeholder="Write something good (optional)">
+				</div>		
+
+				<div class="custom-control custom-checkbox">
+				  <input type="checkbox" class="custom-control-input" id="confirmCorrect" name="confirmCorrect" required="true">
+				  <label class="custom-control-label" for="confirmCorrect">I confirm that the above details are not spam</label>
+				</div>
+
+				</div> 
+				<div class="card-footer">
+					<input type="submit" id="submitButton" name="submitButton" class="btn btn-outline btn-info" value="Make Swap Request">
+				</div>
+
+			</form>
+		</div>
+		</center>
+	</div>
+	<br><br>
+
+	<footer class="bottom"><center>
+		<i class="fa fa-copyright"></i> <code>UltraSimple UI</code><br><br>
+	</center></footer>
+
+</body>
+
+<script type="text/javascript">
+	var boysHostelsData = "<%= boysHostelsData %>";
+	var girlsHostelsData = "<%= girlsHostelsData %>";
+	function populateHostels(payload) {
+		if (payload == "male") {
+			payload = boysHostelsData.split(",");
+		} else {
+			payload = girlsHostelsData.split(",");
+		}
+		var html = "";
+		for (var i = 0; i < payload.length; i++) {
+			html += "<option value='" + payload[i] + "'>" + payload[i] + "</option>";
+		}
+		html = "<select class='custom-select hostelName' name='hostelName'>" + html + "</select>";
+
+		document.getElementById("hostelNameBox").innerHTML = html;
+	}
+</script>
+
+<script type="text/javascript">
+
+	var hostelName = "<%= hostelName %>";
+	var roomNumber = "<%= roomNumber %>";
+	var personId = "<%= personId %>";
+
+	document.getElementById("swapForm").action = "/swap/" + hostelName + "/" + roomNumber + "/" + personId;
+
+</script>
+
+</html>
