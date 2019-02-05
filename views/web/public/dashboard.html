@@ -60,16 +60,67 @@
 		<a href="/newEntry"><button class="btn btn-success" style="font-size:24px">New Entry <i class="fa fa-address-card-o"></i></button></a>
 
 		<a href="/search"><button class="btn btn-primary" style="font-size:24px">Search <i class="fa fa-search"></i></button></a>
+
+		<br><br>
 		<a href="/smartsearch"><button class="btn btn-dark" style="font-size:24px">Smart Search <i class="fa fa-lightbulb-o"></i></button></a
+
+			<br><br><br>
+
+			<div class="row">
+
+				<div class="col-sm-6">
+					<h4>New User Contributions</h4>
+					<div id="newUsers" class="list-group">
+						<center>Your contributions would show up here</center>
+					</div>
+				</div>
+
+				<div class="col-sm-6">
+						<h4>Swap Requests</h4>
+						<div id="swapRequests" class="list-group">
+							<center>Your swap requests would show up here</center>
+						</div>
+					</div>
+
+		</div>
 
 		<br><br>
 
 		</center>
 	</div>
 
+	<br><br>
 	<footer class="bottom"><center>
 		<i class="fa fa-copyright"></i> <code>UltraSimple UI</code><br><br>
 	</center></footer>
+
+	<script>
+	
+	var coreUserData = "<%= coreUserData %>";
+
+	coreUserData = JSON.stringify(coreUserData);
+  coreUserData = JSON.parse(coreUserData);
+  coreUserData = coreUserData.replace(new RegExp("&#34;", 'g'), "\"");
+  coreUserData = coreUserData.replace(new RegExp("&quot;", 'g'), "\"");
+	coreUserData = JSON.parse(coreUserData);
+	
+	var newUsers = coreUserData[0]['value'];
+	var newUserHTML = "";
+	for (var key in newUsers) {
+		console.log(newUsers[key]);
+		newUserHTML += '<a href="/details/' + newUsers[key]['hostelName'] + '/' + newUsers[key]['roomNumber'] + '/' + newUsers[key]['personId'] + '" class="list-group-item list-group-item-action">' + newUsers[key]['studentName'] + '</a>'
+	}
+	document.getElementById('newUsers').innerHTML = newUserHTML;
+
+	var swapRequests = coreUserData[1]['value'];
+	var swapRequestsHTML = "";
+	for (var key in swapRequests) {
+		console.log(swapRequests[key])
+		swapRequestsHTML += '<a href="/details/' + swapRequests[key]['requestGivenTo']['hostelName'] + '/' + swapRequests[key]['requestGivenTo']['roomNumber'] + '/' + swapRequests[key]['requestGivenTo']['personId'] + '" class="list-group-item list-group-item-action">' + swapRequests[key]['swapDate'] + ' - ' + swapRequests[key]['swapTime'] + '</a>'
+	}
+	document.getElementById('swapRequests').innerHTML = swapRequestsHTML;
+	
+	</script>
 
 </body>
 </html>

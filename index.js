@@ -212,7 +212,20 @@ app.post('/login', function(req, res) {
 // user dashboard
 app.get('/userdashboard', function(req, res) {
 	if (req.cookies.currentUser) {
-		res.render('web/public/dashboard.html');
+
+		db.ref().child("contributions").child(req.cookies.currentUser['uid']).once('value')
+		.then( snapshot => {
+			var coreUserData = []
+			snapshot.forEach(function(childSnapshot) {
+
+				coreUserData.push({"key": childSnapshot.key, "value": childSnapshot.val()});
+			});
+			return coreUserData;
+		})
+		.then(function(coreUserData) {
+			res.render('web/public/dashboard.html', {coreUserData: JSON.stringify(coreUserData)});
+		});
+
 	} else {
 		return res.send('Unauthorized');
 	}
@@ -311,7 +324,7 @@ app.post('/swap/:hostelName/:roomNumber/:personId', function(req, res) {
 			swapDate: swapDate,
 			swapTime: swapTime,
 			'requestGivenBy': req.cookies.currentUser,
-			'requestGivenTo': req.params.personId,
+			'requestGivenTo': {'personId': req.params.personId, 'hostelName': req.params.hostelName, 'roomNumber': req.params.roomNumber},
 			'personName': req.body.personName,
 			'bookedRoomNumber': req.body.bookedRoomNumber,
 			'gender': req.body.gender,
@@ -321,6 +334,7 @@ app.post('/swap/:hostelName/:roomNumber/:personId', function(req, res) {
 			'someMessage': req.body.someMessage
 		};
 		db.ref().child("data").child(req.params.hostelName).child(req.params.roomNumber).child(req.params.personId).child('swaps').push().set(swapData);
+		db.ref().child("contributions").child(req.cookies.currentUser['uid']).child('swaps').push().set(swapData);
 		res.redirect('/');
 	} else {
 		res.redirect('/login?redirect=swap+' + req.params.hostelName + '+' + req.params.roomNumber + '+' + req.params.personId);
@@ -386,9 +400,13 @@ app.get('/smartsearch', function(req, res) {
 
 app.post('/smartsearch', function(req, res) {
 	var smartQuery = req.body.smartQuery;
+	
+	if (smartQuery.trim() == '') {
+		return res.render('web/public/data.html', {roomData: {}, searchQuery: smartQuery, searchType: 'smartsearch'});
+	}
 
 	algIndex.search(smartQuery, {
-	 "hitsPerPage": 10,
+	 "hitsPerPage": 5,
 	 "page": 0,
 	 "analytics": true,
 	 "attributesToRetrieve": "*",
@@ -480,10 +498,16 @@ app.post('/newEntry', function(req, res) {
 			'courseYear': courseYear,
 			'contactNumber': contactNumber,
 			'contactURL': contactURL,
-			'regNo': regNo
+			'regNo': regNo,
+			'addedBy': req.cookies.currentUser
 		};
 
-		db.ref().child("data").child(hostelName).child(roomNumber).push().set(userData);
+		var mainRef = db.ref().child("data").child(hostelName).child(roomNumber).push();
+		userData['personId'] = mainRef.getKey();
+		mainRef.set(userData);
+
+		// record the contribution of the particular user
+		db.ref().child("contributions").child(req.cookies.currentUser['uid']).child('newUsers').push().set(userData);
 	
 		return res.redirect('/logout');
 	} else {
