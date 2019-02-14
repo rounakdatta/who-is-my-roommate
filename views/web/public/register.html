@@ -29,10 +29,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<title>Register | Who Is My Roommate</title>
 </head>
+<script src="//instant.page/1.1.0" type="module" integrity="sha384-EwBObn5QAxP8f09iemwAJljc+sU+eUXeL9vSBw1eNmVarwhKk2F9vBEpaN9rsrtp"></script>
 <body>
 
 
@@ -60,20 +62,21 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text">E-mail</span>
 					</div>
-					<input type="text" id="email" name="email" class="form-control" required="true">
+					<input type="text" id="email" name="email" class="form-control" onkeyup="check(this);" required="true">
 				</div>
 	
 				<div class="input-group mb-3">
 					<div class="input-group-prepend">
 						<span class="input-group-text">Password</span>
 					</div>
-					<input type="password" id="pwd" name="pwd" class="form-control" required="true">
+					<input type="password" id="pwd" name="pwd" class="form-control" onkeyup="check(this);" required="true">
 				</div>
+				<span id='pwdMsg'></span><br>
 	
 	
 				</div> 
 				<div class="card-footer">
-					<input type="submit" id="submitButton" name="submitButton" class="btn btn-outline btn-success" value="Register">
+					<input type="submit" id="submitButton" name="submitButton" class="btn btn-outline btn-success" value="Register" disabled>
 				</div>
 
 			</form>
@@ -85,6 +88,45 @@
 	<footer class="bottom"><center>
 		<i class="fa fa-copyright"></i> <code>UltraSimple UI</code><br><br>
 	</center></footer>
+	
+	<script>
+		function check(arg){
+ 		var id = arg.getAttribute('id');
+		 var value = arg.value;
+		 
+		if (id == 'email') {
+
+			if ((/@srmuniv.edu.in\s*$/.test(value))) {
+				document.getElementById('pwdMsg').style.color = 'green';
+				document.getElementById('pwdMsg').innerHTML = 'great!';		
+			} else {
+				document.getElementById('pwdMsg').style.color = 'red';
+    			document.getElementById('pwdMsg').innerHTML = 'only @srmuniv.edu.in emails please!';			
+		}
+
+		}
+
+		if (id == 'pwd') {
+			if (value.length >= 6) {
+			document.getElementById('pwdMsg').style.color = 'green';
+			document.getElementById('pwdMsg').innerHTML = 'great!';
+			
+		 } else {
+			document.getElementById('pwdMsg').style.color = 'red';
+    		document.getElementById('pwdMsg').innerHTML = 'not strong enough';	 
+		 }
+
+		}
+
+
+		 if ((/@srmuniv.edu.in\s*$/.test(document.getElementById('email').value)) && document.getElementById('pwd').value.length >= 6) {
+			 document.getElementById('submitButton').disabled = false;
+		 } else {
+			document.getElementById('submitButton').disabled = true;
+		 }
+
+		}
+	</script>
 
 </body>
 </html>

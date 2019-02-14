@@ -1,0 +1,82 @@
+<html>
+  <head>
+
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script id="scripty" async></script>
+
+	<script type="text/javascript">
+
+		function doMyGA() {
+			const currentURI = window.location.hostname;
+			const uri2ga = {"repl1.hostelroo.ml": "1", "repl2.hostelroo.ml": "2", "repl3.hostelroo.ml": "3", "repl4.hostelroo.ml": "4", "repl5.hostelroo.ml": "5", "repl6.hostelroo.ml": "6", "undefined": "7", "localhost": "8"};
+			const gaId = uri2ga[currentURI];
+			document.getElementById("scripty").src = "https://www.googletagmanager.com/gtag/js?id=UA-131728408-" + gaId;
+			return gaId;
+		}
+
+		
+	</script>
+
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'UA-131728408-' + doMyGA());
+	</script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'>
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<title>Discussions | Who Is My Roommate</title>
+
+  </head>
+  <body>
+    <br>
+      <center>
+      This <b>non-profit</b> project was possible with <br>0 <i class='fas fa-dollar-sign'></i><br>and hours of typing <i class='fas fa-hand-peace'></i>
+      <br><br>
+        Thanks to<br>
+        <a href="https://repl.it/"><img src="https://repl.it/public/images/logo-small.png" style="width:150px;height:50px;"></a>
+        <a href="https://firebase.google.com/"><img src="https://firebase.google.com/_static/images/firebase/touchicon-180.png" style="width:80px;height:80px;"></a>
+        <a href="https://www.algolia.com/"><img src="https://www.algolia.com/static_assets/images/press/downloads/algolia-logo-light.png"  style="width:180px;height:50px;"></a>
+        <a href="https://github.com/"><img src="https://cdn1.iconfinder.com/data/icons/simple-icons/4096/github-4096-black.png"  style="width:100px;height:100px;"></a>
+        <a href="https://www.freenom.com"><img src="https://i2.wp.com/dropgear.rocks/wp-content/uploads/2017/07/freenom-logo.png"  style="width:100px;height:100px;"></a>
+      
+
+      <br><br><a href="/"><button class="btn btn-primary" style="font-size:24px">Back to Site</button></a><hr><br>
+      Please feel free to drop your feedbacks, comments and criticisms here:
+    </center>
+
+      <div class="container">
+          <div id="disqus_thread"></div>
+      </div>
+    
+                                
+  </body>
+
+  <script>
+      
+      /**
+      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+      *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+      /*
+      var disqus_config = function () {
+      this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+      */
+      (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://hostelroo-ml.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+      })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</html>

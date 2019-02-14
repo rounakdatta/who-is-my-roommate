@@ -164,17 +164,54 @@ app.post('/register', function(req, res) {
 	var email = req.body.email;
 	var pwd = req.body.pwd;
 
-	auth.createUserWithEmailAndPassword(email, pwd)
-	.then(function(userData) {
-		console.log('registering and logging in');
-		res.cookie('currentUser', auth.currentUser);
-		return res.redirect('/userdashboard');
-	})
-	.catch(function(error) {
-		if (error) {
-			res.send(error);
-		}
-	});
+	let partialEmail = email.substring(0, email.length - 15);
+
+	var headers = {
+			'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:65.0) Gecko/20100101 Firefox/65.0',
+			'Accept': '*/*',
+			'Accept-Language': 'en-US,en;q=0.5',
+			'Referer': 'https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin',
+			'X-Same-Domain': '1',
+			'Google-Accounts-XSRF': '1',
+			'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+			'DNT': '1',
+			'Connection': 'keep-alive',
+			'TE': 'Trailers',
+			'Cookie': 'GAPS=1:cR3-j4ldBGP_4EegdUGk5yOz3Bg-HA:4ypANPCGrHQ-CN69; NID=160=O9_zclBQNifVLuQsP9F1848auaQ-a_e9HoVuweHYFzAxu-f0LfVsS-aHN63axGxCMGcGVvvJAayrsqpQMNJn2fhS2iIvpe5uX9lFW5Ye6sJfOOt0QFAVXA5CXRSHZEXaSjjhM3nAgIa0PDVPCv5Odj5Qosdvv-XB5UzmsMjZ4gc'
+	};
+	
+	var dataString = 'continue=https%3A%2F%2Faccounts.google.com%2FManageAccount&f.req=%5B%22' + partialEmail + '%40srmuniv.edu.in%22%2C%22AEThLlz88BWYnv6dNMnDxQcZMJUoIl7LVEvw5uECB7VSDYJd6KHP0USW1a6BQ5KuyHYgpH_8VjQx3-JfC9sqwB7-wTOOYbrq8nbQACZnKwhTkqLLdVR0yYvhJH7uI2CzAJVLEPYcsfumoN5jBZUly1pkqtiAtLheU9Obol68voQFPqdSjTVBOy4%22%2C%5B%5D%2Cnull%2C%22IN%22%2Cnull%2Cnull%2C2%2Cfalse%2Ctrue%2C%5Bnull%2Cnull%2C%5B2%2C1%2Cnull%2C1%2C%22https%3A%2F%2Faccounts.google.com%2FServiceLogin%22%2Cnull%2C%5B%5D%2C4%2C%5B%5D%2C%22GlifWebSignIn%22%5D%2C1%2C%5Bnull%2Cnull%2C%5B%5D%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2C%5B%5D%2Cnull%2Cnull%2Cnull%2C%5B%5D%2C%5B%5D%5D%2Cnull%2Cnull%2Cnull%2Ctrue%5D%2C%22' + partialEmail + '%40srmuniv.edu.in%22%5D&bgRequest=%5B%22identifier%22%2C%22!39yl3P1CBnmRmyDahypEr3_mjqXLD_8CAAAAfFIAAAAMmQE_gNU_u3xVCSIMPLK1HG_0Q0M4r0SkYbdLi4K3V__7cemXr1mioNNFHii8s936OiJyEdNWiXJl7vs6nCU3oUMN3mEJBDTj4FeBcp2iwNFFi_61BhhCguZdKqgB1lXPaGmUUoILFjkNh24mA6-3ela65yRJoA3sZQ23ojpa8Mg8vk0yvTQcj57BBjxvG2va48gbwJUjZSBw5hbp7JuqUNyktgU3V3rrtVdPDEEMhtqzwV34kllESDrzRewcXPPQ-iVy62KWjHn8PKKXdsMcgAgttMs8DcHkUG0LVKrmcgFXzvWs9wAKpDa2cWoL_7XaP6hFOuaIEmBa1_4OR8tkgKoyDiYC7SkUBA3uwOJNOBHIq6_Y66Pbk3GvT9UKFyzOKhHTSZXRVx5alkwYxNhLQ8O7ji9sYuoZWGs1akD6fmFh0Q%22%5D&azt=AFoagUWpAVF4Tc7JMQ59-W0kONStyVzcmw%3A1550137987483&cookiesDisabled=false&deviceinfo=%5Bnull%2Cnull%2Cnull%2C%5B%5D%2Cnull%2C%22IN%22%2Cnull%2Cnull%2C%5B%5D%2C%22GlifWebSignIn%22%2Cnull%2C%5Bnull%2Cnull%2C%5B%5D%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2Cnull%2C%5B%5D%2Cnull%2Cnull%2Cnull%2C%5B%5D%2C%5B%5D%5D%5D&gmscoreversion=undefined&checkConnection=youtube%3A442%3A1&checkedDomains=youtube&pstMsg=1&';
+	
+	var options = {
+			url: 'https://accounts.google.com/_/signin/sl/lookup?hl=en-GB&_reqid=55410&rt=j',
+			method: 'POST',
+			headers: headers,
+			body: dataString
+	};
+	
+	function callback(error, response, body) {
+			if (!error && response.statusCode == 200) {
+					var lengthOfResponse = body.length;
+					if (lengthOfResponse < 700) {
+						return res.send('Your email seems fishy and not official!')
+					}
+
+					auth.createUserWithEmailAndPassword(email, pwd)
+					.then(function(userData) {
+						console.log('registering and logging in');
+						res.cookie('currentUser', auth.currentUser);
+						return res.redirect('/userdashboard');
+					})
+					.catch(function(error) {
+						if (error) {
+							res.send(error);
+						}
+					});
+
+			}
+	}
+	
+	request(options, callback);	
 });
 
 // login API
@@ -208,6 +245,10 @@ app.post('/login', function(req, res) {
 		}
 	});
 });
+
+app.get('/discussions', function(req, res) {
+	res.render('web/public/discussions.html');
+})
 
 // user dashboard
 app.get('/userdashboard', function(req, res) {
@@ -250,7 +291,7 @@ app.get('/details/:hostelName/:roomNumber/:personId', function(req, res) {
 		return roomData;
 	})
 	.then(function(roomData) {
-		res.render('web/public/details.html', {roomData: JSON.stringify(roomData)});
+		res.render('web/public/details.html', {hostelName: req.params.hostelName, roomNumber: req.params.roomNumber, personId: req.params.personId, roomData: JSON.stringify(roomData)});
 	});
 });
 
