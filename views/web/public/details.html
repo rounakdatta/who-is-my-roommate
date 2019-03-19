@@ -99,20 +99,30 @@
 
 		for (var i = 0; i < roomData.length; i++) {
 			curr = roomData[i];
+
+			var dateInMS = new Date(curr['value']['addedBy']['stsTokenManager']['expirationTime'] - 3600000);
+			var formattedDate = dateInMS.toDateString() + " | " + dateInMS.toLocaleTimeString();
+
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Student Name' + '</b></div><div class="col-sm-6">' + curr['value']['studentName'] + '</div></div><hr>';
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Room Number' + '</b></div><div class="col-sm-6">' + curr['value']['roomNumber'] + '</div></div><hr>';
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Hostel Name' + '</b></div><div class="col-sm-6">' + curr['value']['hostelName'] + '</div></div><hr>';
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Contact Number' + '</b></div><div class="col-sm-6">' + curr['value']['contactNumber'] + '</div></div><hr>';
-			html += '<div class="row"><div class="col-sm-6"><b>' + 'Contact URL' + '</b></div><div class="col-sm-6"><a href="' + curr['value']['contactURL'] + '">' + curr['value']['contactURL'] + '</a></div></div><hr>';
+
+			if (curr['value']['contactURL'] != 'http://') {
+				html += '<div class="row"><div class="col-sm-6"><b>' + 'Contact URL' + '</b></div><div class="col-sm-6"><a href="' + curr['value']['contactURL'] + '">' + curr['value']['contactURL'] + '</a></div></div><hr>';
+			} else {
+				html += '<div class="row"><div class="col-sm-6"><b>' + 'Contact URL' + '</b></div><div class="col-sm-6"></div></div><hr>';
+			}
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Course Year' + '</b></div><div class="col-sm-6">' + curr['value']['courseYear'] + '</div></div><hr>';
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Gender' + '</b></div><div class="col-sm-6">' + curr['value']['gender'] + '</div></div><hr>';
-			html += '<div class="row"><div class="col-sm-6"><b>' + 'Register Number' + '</b></div><div class="col-sm-6">' + curr['value']['regNo'] + '</div></div>';
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Register Number' + '</b></div><div class="col-sm-6">' + curr['value']['regNo'] + '</div></div><hr>';
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Added' + '</b></div><div class="col-sm-6"><pre>' + formattedDate + '</pre></div></div>';
 
 			var hostelName = "<%= hostelName %>";
 			var roomNumber = "<%= roomNumber %>";
 			var personId = "<%= personId %>";
 			
-			html += "<br><a class='btn btn-default btn-warning' href='/swap/request/" + hostelName + "/" + roomNumber + "/" + personId + "'>Request a Swap</a><br>";
+			html += "<br><a class='btn btn-default btn-warning' href='/swap/request/" + hostelName + "/" + roomNumber + "/" + personId + "'>Request a Swap</a>";
 
 			if (typeof curr['value']['swaps'] != "undefined") {
 
@@ -122,7 +132,7 @@
 				Object.keys(curr['value']['swaps']).forEach(function(key) {
 			  	var thisSwap = curr['value']['swaps'][key];
 
-			  	let mainData = '<i>This swap request is from</i><br><b>Name</b>: ' + thisSwap['personName'] + '<br><b>Room Number</b>: ' + thisSwap['bookedRoomNumber'] + '<br><b>Hostel Name</b>: ' + thisSwap['bookedHostelName'] + '<br><b>Course Year</b>: ' + thisSwap['courseYear'] + '<br><b>Contact Number</b>: ' + thisSwap['contactNumber'] + '<br><b>Message</b>: ' + thisSwap['someMessage'];
+			  	let mainData = '<i>This swap request is from</i><br><b>Name</b>: ' + thisSwap['personName'] + '<br><b>Room Number</b>: ' + thisSwap['bookedRoomNumber'] + '<br><b>Hostel Name</b>: ' + thisSwap['bookedHostelName'] + '<br><b>Course Year</b>: ' + thisSwap['courseYear'] + '<br><b>Contact Number</b>: ' + thisSwap['contactNumber'] + '<br><b>Sent</b>: ' + thisSwap['swapDate'] + ' | ' + thisSwap['swapTime'] + '<br><b>Message</b>: ' + thisSwap['someMessage'];
 
 			  	swaphtml += '<div class="card"><div class="card-header"><a class="collapsed card-link" data-toggle="collapse" href="#collapse' + j + '">' + 'Swap Request ' + j + '</a></div><div id="collapse' + j + '" class="collapse" data-parent="#accordion"><div class="card-body">' + mainData + '</div></div></div>'
 
