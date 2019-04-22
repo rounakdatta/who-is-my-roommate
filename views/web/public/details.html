@@ -88,12 +88,13 @@
 	<script type="text/javascript">
 		
 		var roomData = "<%= roomData %>";
+		var viewerStatus = "<%= viewerStatus %>";
 
 		roomData = JSON.stringify(roomData);
     	roomData = JSON.parse(roomData);
     	roomData = roomData.replace(new RegExp("&#34;", 'g'), "\"");
     	roomData = roomData.replace(new RegExp("&quot;", 'g'), "\"");
-    	roomData = JSON.parse(roomData);
+			roomData = JSON.parse(roomData);
 
     	var html = "";
 
@@ -102,6 +103,7 @@
 
 			var dateInMS = new Date(curr['value']['addedBy']['stsTokenManager']['expirationTime'] - 3600000);
 			var formattedDate = dateInMS.toDateString() + " | " + dateInMS.toLocaleTimeString();
+			var whoAddedMe = curr['value']['addedBy']['email'];
 
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Student Name' + '</b></div><div class="col-sm-6">' + curr['value']['studentName'] + '</div></div><hr>';
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Room Number' + '</b></div><div class="col-sm-6">' + curr['value']['roomNumber'] + '</div></div><hr>';
@@ -116,7 +118,13 @@
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Course Year' + '</b></div><div class="col-sm-6">' + curr['value']['courseYear'] + '</div></div><hr>';
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Gender' + '</b></div><div class="col-sm-6">' + curr['value']['gender'] + '</div></div><hr>';
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Register Number' + '</b></div><div class="col-sm-6">' + curr['value']['regNo'] + '</div></div><hr>';
-			html += '<div class="row"><div class="col-sm-6"><b>' + 'Added' + '</b></div><div class="col-sm-6"><pre>' + formattedDate + '</pre></div></div>';
+			html += '<div class="row"><div class="col-sm-6"><b>' + 'Added On' + '</b></div><div class="col-sm-6"><pre>' + formattedDate + '</pre></div></div>';
+			if (viewerStatus != "undefined") {
+				html += '<div class="row"><div class="col-sm-6"><b>' + 'Added By' + '</b></div><div class="col-sm-6"><pre><a href="mailto:' + whoAddedMe + '?Subject=Hey%20there,%20I%20found%20you%20on%20hostelroo.ml">' + whoAddedMe + '</a></pre></div></div>';
+			} else {
+				let redirectPath = window.location.pathname.substr(1).replace(/\//g, '+');
+				html += '<div class="row"><div class="col-sm-6"><b>' + 'Added By' + '</b></div><div class="col-sm-6"><pre><a href="/login?redirect=' + redirectPath + '">Register/Login to view</a></pre></div></div>';
+			}
 
 			var hostelName = "<%= hostelName %>";
 			var roomNumber = "<%= roomNumber %>";
