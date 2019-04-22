@@ -291,7 +291,7 @@ app.get('/details/:hostelName/:roomNumber/:personId', function(req, res) {
 		return roomData;
 	})
 	.then(function(roomData) {
-		res.render('web/public/details.html', {viewerStatus: req.cookies.currentUser, hostelName: req.params.hostelName, roomNumber: req.params.roomNumber, personId: req.params.personId, roomData: JSON.stringify(roomData)});
+		res.render('web/public/details.html', {"viewerStatus": req.cookies.currentUser, hostelName: req.params.hostelName, roomNumber: req.params.roomNumber, personId: req.params.personId, roomData: JSON.stringify(roomData)});
 	});
 });
 

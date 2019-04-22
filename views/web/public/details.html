@@ -119,7 +119,7 @@
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Gender' + '</b></div><div class="col-sm-6">' + curr['value']['gender'] + '</div></div><hr>';
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Register Number' + '</b></div><div class="col-sm-6">' + curr['value']['regNo'] + '</div></div><hr>';
 			html += '<div class="row"><div class="col-sm-6"><b>' + 'Added On' + '</b></div><div class="col-sm-6"><pre>' + formattedDate + '</pre></div></div>';
-			if (viewerStatus != "undefined") {
+			if (viewerStatus != "undefined" && viewerStatus != "") {
 				html += '<div class="row"><div class="col-sm-6"><b>' + 'Added By' + '</b></div><div class="col-sm-6"><pre><a href="mailto:' + whoAddedMe + '?Subject=Hey%20there,%20I%20found%20you%20on%20hostelroo.ml">' + whoAddedMe + '</a></pre></div></div>';
 			} else {
 				let redirectPath = window.location.pathname.substr(1).replace(/\//g, '+');
